@@ -23,18 +23,70 @@ import com.sebrenon.androidcleanarchitecture.presentation.presenter.impl.MainPre
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import java.util.List;
+
+import javax.annotation.Nonnull;
+
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements View {
 
+    static final ButterKnife.Action<android.view.View> HIDE = new ButterKnife.Action<android.view.View>() {
+        @Override
+        public void apply(@NonNull android.view.View view, int index) {
+            view.setVisibility(android.view.View.INVISIBLE);
+        }
+    };
+
+    static final ButterKnife.Action<android.view.View> SHOW = new ButterKnife.Action<android.view.View>() {
+        @Override
+        public void apply(@NonNull android.view.View view, int index) {
+            view.setVisibility(android.view.View.VISIBLE);
+        }
+    };
+
     Presenter mPresenter;
+
+    @BindView(R.id.txt_result)
+    TextView mTxtResult;
+
+    @BindView(R.id.txt_error)
+    TextView mTxtError;
+
+    @BindView(R.id.etxt_main)
+    EditText mEditText;
+
+    @BindView(R.id.btn_main)
+    Button mButton;
+
+    @BindView(R.id.prg_main)
+    ProgressBar mProgress;
+
+    @BindViews({R.id.etxt_main, R.id.btn_main})
+    List<android.view.View> mTopViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(MainActivity.this);
         mPresenter = new MainPresenter();
         mPresenter.attachView(MainActivity.this);
+    }
+
+    @OnClick(R.id.btn_main)
+    public void submit(View view) {
+        mPresenter.searchButtonClicked(mEditText.getText().toString());
     }
 
     @Override
@@ -45,21 +97,31 @@ public class MainActivity extends AppCompatActivity implements View {
 
     @Override
     public void showLoader() {
-
+        ButterKnife.apply(mTopViews, HIDE);
+        mTxtError.setVisibility(android.view.View.INVISIBLE);
+        mTxtResult.setVisibility(android.view.View.INVISIBLE);
+        mProgress.setVisibility(android.view.View.VISIBLE);
     }
 
     @Override
     public void hideLoader() {
-
+        mProgress.setVisibility(android.view.View.GONE);
     }
 
     @Override
-    public void showError() {
-
+    public void showError(@Nonnull String msg) {
+        mProgress.setVisibility(android.view.View.GONE);
+        ButterKnife.apply(mTopViews, SHOW);
+        mTxtResult.setVisibility(android.view.View.INVISIBLE);
+        mTxtError.setText(msg);
+        mTxtError.setVisibility(android.view.View.VISIBLE);
     }
 
     @Override
-    public void showQuote() {
-
+    public void showQuote(@Nonnull String quote) {
+        ButterKnife.apply(mTopViews, SHOW);
+        mTxtError.setVisibility(android.view.View.INVISIBLE);
+        mTxtResult.setText(quote);
+        mTxtResult.setVisibility(android.view.View.VISIBLE);
     }
 }

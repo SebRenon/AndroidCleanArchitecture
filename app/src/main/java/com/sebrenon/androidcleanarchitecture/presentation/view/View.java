@@ -17,6 +17,8 @@
 
 package com.sebrenon.androidcleanarchitecture.presentation.view;
 
+import javax.annotation.Nonnull;
+
 /**
  * Created by Seb on 14/09/2017.
  *
@@ -29,8 +31,8 @@ public interface View {
 
     void hideLoader();
 
-    void showError();
+    void showError(@Nonnull String msg);
 
-    void showQuote();
+    void showQuote(@Nonnull String quote);
 
 }
