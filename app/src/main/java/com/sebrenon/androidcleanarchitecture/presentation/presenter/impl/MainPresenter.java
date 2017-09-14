@@ -17,10 +17,15 @@
 
 package com.sebrenon.androidcleanarchitecture.presentation.presenter.impl;
 
+import com.sebrenon.androidcleanarchitecture.domain.interactor.RequestQuoteUseCase;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by Seb on 14/09/2017.
@@ -28,7 +33,17 @@ import javax.annotation.Nonnull;
 
 public class MainPresenter implements Presenter {
 
+    @Nonnull
+    private final RequestQuoteUseCase mUseCase;
+
+    @Nullable
+    private Disposable mDisposable;
+
     private View mView;
+
+    public MainPresenter(@Nonnull RequestQuoteUseCase useCase) {
+        this.mUseCase = useCase;
+    }
 
     @Override
     public void attachView(View view) {
@@ -37,11 +52,41 @@ public class MainPresenter implements Presenter {
 
     @Override
     public void detachView() {
+        if (mDisposable != null) {
+            mDisposable.dispose();
+        }
         this.mView = null;
     }
 
     @Override
     public void searchButtonClicked(@Nonnull String value) {
+        this.mView.showLoader();
+        this.mUseCase.getQuote(value).subscribe(new Observer<String>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                if (MainPresenter.this.mDisposable != null) {
+                    MainPresenter.this.mDisposable.dispose();
+                }
+                MainPresenter.this.mDisposable = d;
+            }
 
+            @Override
+            public void onNext(String s) {
+                MainPresenter.this.mView.hideLoader();
+                MainPresenter.this.mView.showQuote(s);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                MainPresenter.this.mView.hideLoader();
+                // TODO: for now, show message. Later we will handle the exception
+                MainPresenter.this.mView.showError(e.getMessage());
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 }

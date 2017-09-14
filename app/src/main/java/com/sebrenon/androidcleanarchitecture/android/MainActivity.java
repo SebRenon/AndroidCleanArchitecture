@@ -18,6 +18,8 @@
 package com.sebrenon.androidcleanarchitecture.android;
 
 import com.sebrenon.androidcleanarchitecture.R;
+import com.sebrenon.androidcleanarchitecture.data.repository.QuoteDataRepositoryImpl;
+import com.sebrenon.androidcleanarchitecture.domain.interactor.impl.RequestQuoteUseCaseImpl;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.impl.MainPresenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
@@ -38,6 +40,8 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View {
 
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(MainActivity.this);
-        mPresenter = new MainPresenter();
+        mPresenter = new MainPresenter(new RequestQuoteUseCaseImpl(new QuoteDataRepositoryImpl(), Schedulers.io(), AndroidSchedulers.mainThread()));
         mPresenter.attachView(MainActivity.this);
     }
 
