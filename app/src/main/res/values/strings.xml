@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidCleanArchitecture</string>
+    <string name="main.get.quote">Get Quote</string>
+    <string name="main.hint">Enter a Symbol here...</string>
 </resources>
