@@ -25,6 +25,7 @@ import com.sebrenon.androidcleanarchitecture.quote.presentation.view.View;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -33,17 +34,18 @@ import io.reactivex.disposables.Disposable;
  * Created by Seb on 14/09/2017.
  */
 
-public class MainPresenter implements Presenter {
+public class MainPresenterImpl implements Presenter {
 
-    @Nonnull
-    private final RequestQuoteUseCase mUseCase;
+    @Inject
+    RequestQuoteUseCase mUseCase;
 
     @Nullable
     private Disposable mDisposable;
 
     private View mView;
 
-    public MainPresenter(@Nonnull RequestQuoteUseCase useCase) {
+    @Inject
+    public MainPresenterImpl(RequestQuoteUseCase useCase) {
         this.mUseCase = useCase;
     }
 
@@ -70,28 +72,28 @@ public class MainPresenter implements Presenter {
         this.mUseCase.getQuote(value).subscribe(new Observer<String>() {
             @Override
             public void onSubscribe(Disposable d) {
-                if (MainPresenter.this.mDisposable != null) {
-                    MainPresenter.this.mDisposable.dispose();
+                if (MainPresenterImpl.this.mDisposable != null) {
+                    MainPresenterImpl.this.mDisposable.dispose();
                 }
-                MainPresenter.this.mDisposable = d;
+                MainPresenterImpl.this.mDisposable = d;
             }
 
             @Override
             public void onNext(String s) {
-                MainPresenter.this.mView.hideLoader();
-                MainPresenter.this.mView.showQuote(s);
+                MainPresenterImpl.this.mView.hideLoader();
+                MainPresenterImpl.this.mView.showQuote(s);
             }
 
             @Override
             public void onError(Throwable e) {
-                MainPresenter.this.mView.hideLoader();
+                MainPresenterImpl.this.mView.hideLoader();
                 String msg = "Error, please try again.";
                 if (e instanceof QuoteNotFoundException) {
                     msg = "Quote not found for this symbol.";
                 } else if (e instanceof InvalidSymbolFormat) {
                     msg = "Invalid symbol.";
                 }
-                MainPresenter.this.mView.showError(msg);
+                MainPresenterImpl.this.mView.showError(msg);
             }
 
             @Override

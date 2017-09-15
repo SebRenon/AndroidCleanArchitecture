@@ -17,7 +17,7 @@
 
 package com.sebrenon.androidcleanarchitecture.dependency;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.impl.MainPresenterImpl;
 
 import javax.inject.Singleton;
 
@@ -30,5 +30,5 @@ import dagger.Component;
 @Component(modules = ApplicationModule.class)
 public interface ApplicationComponent {
 
-    Presenter providePresenter();
+    MainPresenterImpl providePresenter();
 }

@@ -27,8 +27,6 @@ import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.RequestQuot
 import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.impl.RequestQuoteUseCaseImpl;
 import com.sebrenon.androidcleanarchitecture.quote.domain.repository.QuoteDataRepository;
 import com.sebrenon.androidcleanarchitecture.quote.network.datasource.impl.WebDataSourceImpl;
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.impl.MainPresenter;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -85,11 +83,5 @@ public class ApplicationModule {
     @Named("SUBSCRIBE")
     Scheduler subscribeOnScheduler() {
         return Schedulers.io();
-    }
-
-    @Singleton
-    @Provides
-    Presenter presenter(RequestQuoteUseCase requestQuoteUseCase) {
-        return new MainPresenter(requestQuoteUseCase);
     }
 }
