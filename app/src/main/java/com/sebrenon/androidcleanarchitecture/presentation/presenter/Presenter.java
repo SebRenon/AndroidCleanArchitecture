@@ -20,6 +20,7 @@ package com.sebrenon.androidcleanarchitecture.presentation.presenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Created by Seb on 14/09/2017.
@@ -34,4 +35,6 @@ public interface Presenter {
     void detachView();
 
     void searchButtonClicked(@Nonnull String value);
+
+    void restoreData(@Nonnull String input);
 }

@@ -17,6 +17,7 @@
 
 package com.sebrenon.androidcleanarchitecture.data.repository.impl;
 
+import com.sebrenon.androidcleanarchitecture.data.datasource.LocalDataSource;
 import com.sebrenon.androidcleanarchitecture.data.datasource.QuoteDataSource;
 import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
 import com.sebrenon.androidcleanarchitecture.domain.repository.QuoteDataRepository;
@@ -24,23 +25,34 @@ import com.sebrenon.androidcleanarchitecture.domain.repository.QuoteDataReposito
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import io.reactivex.Observable;
-
 /**
  * Created by Seb on 14/09/2017.
  */
 
 public class QuoteDataRepositoryImpl implements QuoteDataRepository {
 
+    @Nonnull
     private final QuoteDataSource mWebDataSource;
 
-    public QuoteDataRepositoryImpl(QuoteDataSource webDataSource) {
+    @Nonnull
+    private final LocalDataSource mCacheDataSource;
+
+    public QuoteDataRepositoryImpl(@Nonnull QuoteDataSource webDataSource, @Nonnull LocalDataSource cacheDataSource) {
         mWebDataSource = webDataSource;
+        mCacheDataSource = cacheDataSource;
     }
 
     @Nullable
     @Override
     public QuoteModel retrieveQuote(@Nonnull String symbol) {
-        return mWebDataSource.fetchQuote(symbol);
+        QuoteModel quoteModel = mCacheDataSource.fetchQuote(symbol);
+        if (quoteModel == null) {
+            quoteModel = mWebDataSource.fetchQuote(symbol);
+            if (quoteModel != null) {
+                // Store in cache
+                mCacheDataSource.storeQuote(quoteModel);
+            }
+        }
+        return quoteModel;
     }
 }

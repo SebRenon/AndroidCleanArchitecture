@@ -62,6 +62,10 @@ public class MainPresenter implements Presenter {
 
     @Override
     public void searchButtonClicked(@Nonnull String value) {
+        getQuoteData(value);
+    }
+
+    private void getQuoteData(@Nonnull String value) {
         this.mView.showLoader();
         this.mUseCase.getQuote(value).subscribe(new Observer<String>() {
             @Override
@@ -95,5 +99,12 @@ public class MainPresenter implements Presenter {
 
             }
         });
+    }
+
+    @Override
+    public void restoreData(@Nonnull String input) {
+        if (!input.isEmpty()) {
+            getQuoteData(input);
+        }
     }
 }

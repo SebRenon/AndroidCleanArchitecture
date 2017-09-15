@@ -18,6 +18,7 @@
 package com.sebrenon.androidcleanarchitecture.application.impl;
 
 import com.sebrenon.androidcleanarchitecture.application.ApplicationController;
+import com.sebrenon.androidcleanarchitecture.database.AppDatabase;
 
 import javax.annotation.Nonnull;
 
@@ -35,14 +36,18 @@ public class ApplicationControllerImpl implements ApplicationController {
 
     private final Retrofit mRetrofit;
 
-    private ApplicationControllerImpl(Retrofit.Builder builder) {
+    private final AppDatabase mAppDataBase;
+
+    private ApplicationControllerImpl(@Nonnull AppDatabase database, @Nonnull Retrofit.Builder builder) {
         mRetrofit =
                 builder.baseUrl("https://query.yahooapis.com/")
                         .addConverterFactory(GsonConverterFactory.create()).build();
+
+        mAppDataBase = database;
     }
 
-    public static void init(Retrofit.Builder builder) {
-        sInstance = new ApplicationControllerImpl(builder);
+    public static void init(@Nonnull AppDatabase database, @Nonnull Retrofit.Builder builder) {
+        sInstance = new ApplicationControllerImpl(database, builder);
     }
 
     public static ApplicationController getInstance() {
@@ -54,5 +59,11 @@ public class ApplicationControllerImpl implements ApplicationController {
 
     public Retrofit getRetrofit() {
         return mRetrofit;
+    }
+
+    @Nonnull
+    @Override
+    public AppDatabase getDatabase() {
+        return mAppDataBase;
     }
 }

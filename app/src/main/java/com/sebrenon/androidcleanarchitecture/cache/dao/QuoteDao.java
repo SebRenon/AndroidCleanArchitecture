@@ -15,22 +15,25 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.application;
+package com.sebrenon.androidcleanarchitecture.cache.dao;
 
-import com.sebrenon.androidcleanarchitecture.database.AppDatabase;
+import com.sebrenon.androidcleanarchitecture.cache.entity.QuoteEntity;
 
-import javax.annotation.Nonnull;
-
-import retrofit2.Retrofit;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
 
 /**
  * Created by Seb on 14/09/2017.
  */
 
-public interface ApplicationController {
+@Dao
+public interface QuoteDao {
 
-    @Nonnull Retrofit getRetrofit();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertQuote(QuoteEntity... quoteEntities);
 
-    @Nonnull
-    AppDatabase getDatabase();
+    @Query("SELECT * FROM quote WHERE symbol LIKE :query_symbol AND timestamp >= :period LIMIT 1")
+    QuoteEntity findBySymbol(String query_symbol, long period);
 }

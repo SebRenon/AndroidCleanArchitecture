@@ -18,8 +18,10 @@
 package com.sebrenon.androidcleanarchitecture.android;
 
 import com.sebrenon.androidcleanarchitecture.application.impl.ApplicationControllerImpl;
+import com.sebrenon.androidcleanarchitecture.database.AppDatabase;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 
 import retrofit2.Retrofit;
 
@@ -32,6 +34,8 @@ public class CleanApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        ApplicationControllerImpl.init(new Retrofit.Builder());
+        AppDatabase database = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "db-clean-arch").build();
+        ApplicationControllerImpl.init(database, new Retrofit.Builder());
     }
 }

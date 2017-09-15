@@ -15,22 +15,17 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.application;
+package com.sebrenon.androidcleanarchitecture.data.datasource;
 
-import com.sebrenon.androidcleanarchitecture.database.AppDatabase;
+import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
 
 import javax.annotation.Nonnull;
 
-import retrofit2.Retrofit;
-
 /**
- * Created by Seb on 14/09/2017.
+ * Created by Seb on 15/09/2017.
  */
 
-public interface ApplicationController {
+public interface LocalDataSource extends QuoteDataSource {
 
-    @Nonnull Retrofit getRetrofit();
-
-    @Nonnull
-    AppDatabase getDatabase();
+    void storeQuote(@Nonnull QuoteModel quoteModel);
 }

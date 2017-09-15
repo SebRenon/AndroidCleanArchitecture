@@ -15,7 +15,7 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.network.datasource.transform;
+package com.sebrenon.androidcleanarchitecture.network.transform;
 
 import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
 import com.sebrenon.androidcleanarchitecture.network.model.RemoteQuoteModel;
@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 public class TransformQuoteData {
 
     @Nullable
-    public static QuoteModel transform(RemoteQuoteModel remoteQuoteModel) {
+    public static QuoteModel transform(@Nullable RemoteQuoteModel remoteQuoteModel) {
         QuoteModel quoteModel = new QuoteModel();
         if (remoteQuoteModel != null && remoteQuoteModel.getQuery() != null && remoteQuoteModel.getQuery().getResults() != null && remoteQuoteModel.getQuery().getResults().getQuote() != null && remoteQuoteModel.getQuery().getResults().getQuote().getName() != null) {
             RemoteQuoteModel.QueryBean.ResultsBean.QuoteBean quote = remoteQuoteModel.getQuery().getResults().getQuote();

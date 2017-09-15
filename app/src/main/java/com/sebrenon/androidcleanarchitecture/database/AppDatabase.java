@@ -15,22 +15,20 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.application;
+package com.sebrenon.androidcleanarchitecture.database;
 
-import com.sebrenon.androidcleanarchitecture.database.AppDatabase;
+import com.sebrenon.androidcleanarchitecture.cache.dao.QuoteDao;
+import com.sebrenon.androidcleanarchitecture.cache.entity.QuoteEntity;
 
-import javax.annotation.Nonnull;
-
-import retrofit2.Retrofit;
+import android.arch.persistence.room.Database;
+import android.arch.persistence.room.RoomDatabase;
 
 /**
- * Created by Seb on 14/09/2017.
+ * Created by Seb on 15/09/2017.
  */
 
-public interface ApplicationController {
+@Database(entities = {QuoteEntity.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
 
-    @Nonnull Retrofit getRetrofit();
-
-    @Nonnull
-    AppDatabase getDatabase();
+    public abstract QuoteDao quoteDao();
 }

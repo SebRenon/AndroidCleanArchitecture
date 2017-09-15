@@ -20,7 +20,7 @@ package com.sebrenon.androidcleanarchitecture.network.datasource.impl;
 import com.sebrenon.androidcleanarchitecture.application.ApplicationController;
 import com.sebrenon.androidcleanarchitecture.data.datasource.QuoteDataSource;
 import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
-import com.sebrenon.androidcleanarchitecture.network.datasource.transform.TransformQuoteData;
+import com.sebrenon.androidcleanarchitecture.network.transform.TransformQuoteData;
 import com.sebrenon.androidcleanarchitecture.network.endpoint.QuoteEndpoint;
 import com.sebrenon.androidcleanarchitecture.network.model.RemoteQuoteModel;
 

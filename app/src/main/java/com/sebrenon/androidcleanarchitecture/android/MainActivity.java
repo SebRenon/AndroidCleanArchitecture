@@ -19,6 +19,7 @@ package com.sebrenon.androidcleanarchitecture.android;
 
 import com.sebrenon.androidcleanarchitecture.R;
 import com.sebrenon.androidcleanarchitecture.application.impl.ApplicationControllerImpl;
+import com.sebrenon.androidcleanarchitecture.cache.datasource.impl.CacheDataSourceImpl;
 import com.sebrenon.androidcleanarchitecture.data.repository.impl.QuoteDataRepositoryImpl;
 import com.sebrenon.androidcleanarchitecture.domain.interactor.impl.RequestQuoteUseCaseImpl;
 import com.sebrenon.androidcleanarchitecture.network.datasource.impl.WebDataSourceImpl;
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity implements View {
         }
     };
 
+    private static final String KEY_USER_INPUT = "user_input";
+
     Presenter mPresenter;
 
     @BindView(R.id.txt_result)
@@ -87,8 +90,17 @@ public class MainActivity extends AppCompatActivity implements View {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(MainActivity.this);
         mPresenter = new MainPresenter(
-                new RequestQuoteUseCaseImpl(new QuoteDataRepositoryImpl(new WebDataSourceImpl(ApplicationControllerImpl.getInstance())), Schedulers.io(), AndroidSchedulers.mainThread()));
+                new RequestQuoteUseCaseImpl(
+                        new QuoteDataRepositoryImpl(new WebDataSourceImpl(ApplicationControllerImpl.getInstance()), new CacheDataSourceImpl(ApplicationControllerImpl.getInstance())), Schedulers.io(),
+                        AndroidSchedulers.mainThread()));
         mPresenter.attachView(MainActivity.this);
+
+        if (savedInstanceState != null) {
+            String input = savedInstanceState.getString(KEY_USER_INPUT);
+            if (input != null) {
+                mPresenter.restoreData(input);
+            }
+        }
     }
 
     @OnClick(R.id.btn_main)
@@ -130,5 +142,12 @@ public class MainActivity extends AppCompatActivity implements View {
         mTxtError.setVisibility(android.view.View.INVISIBLE);
         mTxtResult.setText(quote);
         mTxtResult.setVisibility(android.view.View.VISIBLE);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        String input = mEditText.getText().toString();
+        outState.putString(KEY_USER_INPUT, input);
+        super.onSaveInstanceState(outState);
     }
 }
