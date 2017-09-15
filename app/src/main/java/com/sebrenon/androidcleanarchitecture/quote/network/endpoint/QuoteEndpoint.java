@@ -15,20 +15,20 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
+package com.sebrenon.androidcleanarchitecture.quote.network.endpoint;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.network.model.RemoteQuoteModel;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public interface QuoteEndpoint {
+
+    @GET("v1/public/yql?format=json&env=store://datatables.org/alltableswithkeys")
+    Call<RemoteQuoteModel> fetchQuote(@Query("q") String query);
 }

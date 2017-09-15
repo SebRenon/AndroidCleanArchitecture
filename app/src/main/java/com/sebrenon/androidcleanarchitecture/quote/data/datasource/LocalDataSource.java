@@ -15,20 +15,17 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
+package com.sebrenon.androidcleanarchitecture.quote.data.datasource;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.domain.model.QuoteModel;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import javax.annotation.Nonnull;
 
 /**
  * Created by Seb on 15/09/2017.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public interface LocalDataSource extends QuoteDataSource {
+
+    void storeQuote(@Nonnull QuoteModel quoteModel);
 }

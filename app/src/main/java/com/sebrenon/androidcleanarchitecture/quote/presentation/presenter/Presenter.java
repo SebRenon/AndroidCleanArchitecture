@@ -15,20 +15,25 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
+package com.sebrenon.androidcleanarchitecture.quote.presentation.presenter;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.presentation.view.View;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import javax.annotation.Nonnull;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
+ *
+ * This interface is the contract for the Presenter. Here is what the Prsenter can do.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public interface Presenter {
+
+    void attachView(View view);
+
+    void detachView();
+
+    void searchButtonClicked(@Nonnull String value);
+
+    void restoreData(@Nonnull String input);
 }

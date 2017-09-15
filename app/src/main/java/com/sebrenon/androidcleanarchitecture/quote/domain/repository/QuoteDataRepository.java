@@ -15,20 +15,19 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
+package com.sebrenon.androidcleanarchitecture.quote.domain.repository;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.domain.model.QuoteModel;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public interface QuoteDataRepository {
+
+    @Nullable
+    QuoteModel retrieveQuote(@Nonnull String symbol);
 }

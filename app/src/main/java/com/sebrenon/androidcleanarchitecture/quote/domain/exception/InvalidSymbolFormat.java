@@ -15,20 +15,12 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
-
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
-
-import javax.inject.Singleton;
-
-import dagger.Component;
+package com.sebrenon.androidcleanarchitecture.quote.domain.exception;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public class InvalidSymbolFormat extends Exception {
+
 }

@@ -15,20 +15,25 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.database;
+package com.sebrenon.androidcleanarchitecture.quote.cache.dao;
 
-import com.sebrenon.androidcleanarchitecture.quote.cache.dao.QuoteDao;
 import com.sebrenon.androidcleanarchitecture.quote.cache.entity.QuoteEntity;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
+import android.arch.persistence.room.Query;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
  */
 
-@Database(entities = {QuoteEntity.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
+@Dao
+public interface QuoteDao {
 
-    public abstract QuoteDao quoteDao();
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertQuote(QuoteEntity... quoteEntities);
+
+    @Query("SELECT * FROM quote WHERE symbol LIKE :query_symbol AND timestamp >= :period LIMIT 1")
+    QuoteEntity findBySymbol(String query_symbol, long period);
 }

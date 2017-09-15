@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.sebrenon.androidcleanarchitecture.android.MainActivity">
+        tools:context="com.sebrenon.androidcleanarchitecture.quote.android.MainActivity">
 
     <EditText android:id="@+id/etxt_main" android:layout_width="wrap_content" android:layout_height="wrap_content"
               android:hint="@string/main.hint"

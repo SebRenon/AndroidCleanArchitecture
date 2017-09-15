@@ -19,16 +19,16 @@ package com.sebrenon.androidcleanarchitecture.dependency;
 
 import com.sebrenon.androidcleanarchitecture.application.ApplicationController;
 import com.sebrenon.androidcleanarchitecture.application.impl.ApplicationControllerImpl;
-import com.sebrenon.androidcleanarchitecture.cache.datasource.impl.CacheDataSourceImpl;
-import com.sebrenon.androidcleanarchitecture.data.datasource.LocalDataSource;
-import com.sebrenon.androidcleanarchitecture.data.datasource.QuoteDataSource;
-import com.sebrenon.androidcleanarchitecture.data.repository.impl.QuoteDataRepositoryImpl;
-import com.sebrenon.androidcleanarchitecture.domain.interactor.RequestQuoteUseCase;
-import com.sebrenon.androidcleanarchitecture.domain.interactor.impl.RequestQuoteUseCaseImpl;
-import com.sebrenon.androidcleanarchitecture.domain.repository.QuoteDataRepository;
-import com.sebrenon.androidcleanarchitecture.network.datasource.impl.WebDataSourceImpl;
-import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
-import com.sebrenon.androidcleanarchitecture.presentation.presenter.impl.MainPresenter;
+import com.sebrenon.androidcleanarchitecture.quote.cache.datasource.impl.CacheDataSourceImpl;
+import com.sebrenon.androidcleanarchitecture.quote.data.datasource.LocalDataSource;
+import com.sebrenon.androidcleanarchitecture.quote.data.datasource.QuoteDataSource;
+import com.sebrenon.androidcleanarchitecture.quote.data.repository.impl.QuoteDataRepositoryImpl;
+import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.RequestQuoteUseCase;
+import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.impl.RequestQuoteUseCaseImpl;
+import com.sebrenon.androidcleanarchitecture.quote.domain.repository.QuoteDataRepository;
+import com.sebrenon.androidcleanarchitecture.quote.network.datasource.impl.WebDataSourceImpl;
+import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.impl.MainPresenter;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

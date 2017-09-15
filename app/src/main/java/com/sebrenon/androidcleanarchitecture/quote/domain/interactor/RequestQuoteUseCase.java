@@ -15,20 +15,17 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.dependency;
+package com.sebrenon.androidcleanarchitecture.quote.domain.interactor;
 
-import com.sebrenon.androidcleanarchitecture.quote.presentation.presenter.Presenter;
+import javax.annotation.Nonnull;
 
-import javax.inject.Singleton;
-
-import dagger.Component;
+import io.reactivex.Observable;
 
 /**
- * Created by Seb on 15/09/2017.
+ * Created by Seb on 14/09/2017.
  */
-@Singleton
-@Component(modules = ApplicationModule.class)
-public interface ApplicationComponent {
 
-    Presenter providePresenter();
+public interface RequestQuoteUseCase {
+
+    Observable<String> getQuote(@Nonnull String userInput);
 }
