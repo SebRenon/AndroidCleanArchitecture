@@ -15,20 +15,22 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.database;
-
-import com.sebrenon.androidcleanarchitecture.cache.dao.QuoteDao;
-import com.sebrenon.androidcleanarchitecture.cache.entity.QuoteEntity;
-
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+package com.sebrenon.androidcleanarchitecture.dependency;
 
 /**
  * Created by Seb on 15/09/2017.
  */
 
-@Database(entities = {QuoteEntity.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
+public class AppRegistry {
 
-    public abstract QuoteDao quoteDao();
+    private static ApplicationComponent sComponent;
+
+    public static void init() {
+
+        sComponent = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule()).build();
+    }
+
+    public static ApplicationComponent getComponent() {
+        return sComponent;
+    }
 }

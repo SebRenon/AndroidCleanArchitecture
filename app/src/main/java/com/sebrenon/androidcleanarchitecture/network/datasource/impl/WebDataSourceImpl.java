@@ -28,6 +28,7 @@ import java.io.IOException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 import retrofit2.Response;
 import retrofit2.Retrofit;

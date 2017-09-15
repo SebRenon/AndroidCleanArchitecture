@@ -18,13 +18,8 @@
 package com.sebrenon.androidcleanarchitecture.android;
 
 import com.sebrenon.androidcleanarchitecture.R;
-import com.sebrenon.androidcleanarchitecture.application.impl.ApplicationControllerImpl;
-import com.sebrenon.androidcleanarchitecture.cache.datasource.impl.CacheDataSourceImpl;
-import com.sebrenon.androidcleanarchitecture.data.repository.impl.QuoteDataRepositoryImpl;
-import com.sebrenon.androidcleanarchitecture.domain.interactor.impl.RequestQuoteUseCaseImpl;
-import com.sebrenon.androidcleanarchitecture.network.datasource.impl.WebDataSourceImpl;
+import com.sebrenon.androidcleanarchitecture.dependency.AppRegistry;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
-import com.sebrenon.androidcleanarchitecture.presentation.presenter.impl.MainPresenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
 
 import android.os.Bundle;
@@ -43,8 +38,6 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity implements View {
 
@@ -89,10 +82,7 @@ public class MainActivity extends AppCompatActivity implements View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(MainActivity.this);
-        mPresenter = new MainPresenter(
-                new RequestQuoteUseCaseImpl(
-                        new QuoteDataRepositoryImpl(new WebDataSourceImpl(ApplicationControllerImpl.getInstance()), new CacheDataSourceImpl(ApplicationControllerImpl.getInstance())), Schedulers.io(),
-                        AndroidSchedulers.mainThread()));
+        mPresenter = AppRegistry.getComponent().providePresenter();
         mPresenter.attachView(MainActivity.this);
 
         if (savedInstanceState != null) {

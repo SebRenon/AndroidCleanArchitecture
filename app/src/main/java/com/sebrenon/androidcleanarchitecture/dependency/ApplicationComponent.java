@@ -15,20 +15,23 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.database;
+package com.sebrenon.androidcleanarchitecture.dependency;
 
-import com.sebrenon.androidcleanarchitecture.cache.dao.QuoteDao;
-import com.sebrenon.androidcleanarchitecture.cache.entity.QuoteEntity;
+import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
 
 /**
  * Created by Seb on 15/09/2017.
  */
+@Singleton
+@Component(modules = ApplicationModule.class)
+public interface ApplicationComponent {
 
-@Database(entities = {QuoteEntity.class}, version = 1, exportSchema = false)
-public abstract class AppDatabase extends RoomDatabase {
-
-    public abstract QuoteDao quoteDao();
+    Presenter providePresenter();
 }
