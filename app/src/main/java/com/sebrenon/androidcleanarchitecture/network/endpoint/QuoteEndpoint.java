@@ -15,23 +15,20 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.data.repository;
+package com.sebrenon.androidcleanarchitecture.network.endpoint;
 
-import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
-import com.sebrenon.androidcleanarchitecture.domain.repository.QuoteDataRepository;
+import com.sebrenon.androidcleanarchitecture.network.model.RemoteQuoteModel;
 
-import javax.annotation.Nonnull;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 /**
  * Created by Seb on 14/09/2017.
  */
 
-public class QuoteDataRepositoryImpl implements QuoteDataRepository {
+public interface QuoteEndpoint {
 
-    @Nonnull
-    @Override
-    public QuoteModel retrieveQuote(@Nonnull String symbol) {
-        // TODO: request data from WebDataSource
-        return new QuoteModel();
-    }
+    @GET("v1/public/yql?format=json&env=store://datatables.org/alltableswithkeys")
+    Call<RemoteQuoteModel> fetchQuote(@Query("q") String query);
 }

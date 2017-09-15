@@ -17,6 +17,8 @@
 
 package com.sebrenon.androidcleanarchitecture.presentation.presenter.impl;
 
+import com.sebrenon.androidcleanarchitecture.domain.exception.InvalidSymbolFormat;
+import com.sebrenon.androidcleanarchitecture.domain.exception.QuoteNotFoundException;
 import com.sebrenon.androidcleanarchitecture.domain.interactor.RequestQuoteUseCase;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
@@ -79,8 +81,13 @@ public class MainPresenter implements Presenter {
             @Override
             public void onError(Throwable e) {
                 MainPresenter.this.mView.hideLoader();
-                // TODO: for now, show message. Later we will handle the exception
-                MainPresenter.this.mView.showError(e.getMessage());
+                String msg = "Error, please try again.";
+                if (e instanceof QuoteNotFoundException) {
+                    msg = "Quote not found for this symbol.";
+                } else if (e instanceof InvalidSymbolFormat) {
+                    msg = "Invalid symbol.";
+                }
+                MainPresenter.this.mView.showError(msg);
             }
 
             @Override

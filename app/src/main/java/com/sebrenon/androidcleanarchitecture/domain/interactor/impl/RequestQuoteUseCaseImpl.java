@@ -18,6 +18,7 @@
 package com.sebrenon.androidcleanarchitecture.domain.interactor.impl;
 
 import com.sebrenon.androidcleanarchitecture.domain.exception.InvalidSymbolFormat;
+import com.sebrenon.androidcleanarchitecture.domain.exception.QuoteNotFoundException;
 import com.sebrenon.androidcleanarchitecture.domain.interactor.RequestQuoteUseCase;
 import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
 import com.sebrenon.androidcleanarchitecture.domain.repository.QuoteDataRepository;
@@ -67,14 +68,17 @@ public class RequestQuoteUseCaseImpl implements RequestQuoteUseCase {
             @Override
             public QuoteModel apply(String s) throws Exception {
                 // request data from repository
-                return RequestQuoteUseCaseImpl.this.mQuoteDataRepository.retrieveQuote(s);
+                QuoteModel response = RequestQuoteUseCaseImpl.this.mQuoteDataRepository.retrieveQuote(s);
+                if (response == null) {
+                    throw new QuoteNotFoundException();
+                } else {
+                    return response;
+                }
             }
         }).map(new Function<QuoteModel, String>() {
-
             @Override
             public String apply(QuoteModel quoteModel) throws Exception {
-                // transform model into final string
-                return quoteModel.getSymbol() + " @ $" + quoteModel.getPrice();
+                return quoteModel.getSymbol() + " @ $" + quoteModel.getPrice() + " (" + quoteModel.getChange() + "%)";
             }
         }).observeOn(mObserverScheduler).subscribeOn(mSubscriberScheduler);
     }

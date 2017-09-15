@@ -18,8 +18,10 @@
 package com.sebrenon.androidcleanarchitecture.android;
 
 import com.sebrenon.androidcleanarchitecture.R;
-import com.sebrenon.androidcleanarchitecture.data.repository.QuoteDataRepositoryImpl;
+import com.sebrenon.androidcleanarchitecture.application.impl.ApplicationControllerImpl;
+import com.sebrenon.androidcleanarchitecture.data.repository.impl.QuoteDataRepositoryImpl;
 import com.sebrenon.androidcleanarchitecture.domain.interactor.impl.RequestQuoteUseCaseImpl;
+import com.sebrenon.androidcleanarchitecture.network.datasource.impl.WebDataSourceImpl;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.Presenter;
 import com.sebrenon.androidcleanarchitecture.presentation.presenter.impl.MainPresenter;
 import com.sebrenon.androidcleanarchitecture.presentation.view.View;
@@ -84,12 +86,13 @@ public class MainActivity extends AppCompatActivity implements View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(MainActivity.this);
-        mPresenter = new MainPresenter(new RequestQuoteUseCaseImpl(new QuoteDataRepositoryImpl(), Schedulers.io(), AndroidSchedulers.mainThread()));
+        mPresenter = new MainPresenter(
+                new RequestQuoteUseCaseImpl(new QuoteDataRepositoryImpl(new WebDataSourceImpl(ApplicationControllerImpl.getInstance())), Schedulers.io(), AndroidSchedulers.mainThread()));
         mPresenter.attachView(MainActivity.this);
     }
 
     @OnClick(R.id.btn_main)
-    public void submit(View view) {
+    public void submit(android.view.View view) {
         mPresenter.searchButtonClicked(mEditText.getText().toString());
     }
 

@@ -15,22 +15,12 @@
  *
  */
 
-package com.sebrenon.androidcleanarchitecture.domain.repository;
-
-import com.sebrenon.androidcleanarchitecture.domain.exception.QuoteNotFoundException;
-import com.sebrenon.androidcleanarchitecture.domain.model.QuoteModel;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import io.reactivex.Observable;
+package com.sebrenon.androidcleanarchitecture.domain.exception;
 
 /**
  * Created by Seb on 14/09/2017.
  */
 
-public interface QuoteDataRepository {
+public class QuoteNotFoundException extends Exception {
 
-    @Nullable
-    QuoteModel retrieveQuote(@Nonnull String symbol);
 }

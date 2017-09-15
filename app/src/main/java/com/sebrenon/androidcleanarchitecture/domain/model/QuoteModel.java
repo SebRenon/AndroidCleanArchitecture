@@ -27,7 +27,7 @@ public class QuoteModel {
 
     private String company;
 
-    private String timestamp;
+    private String change;
 
     private String price;
 
@@ -50,12 +50,12 @@ public class QuoteModel {
         this.company = company;
     }
 
-    public String getTimestamp() {
-        return timestamp;
+    public String getChange() {
+        return change;
     }
 
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
+    public void setChange(String change) {
+        this.change = change;
     }
 
     public String getPrice() {
