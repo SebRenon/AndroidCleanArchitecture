@@ -4,13 +4,14 @@ This projet is a quick implementation of the Clean Architecture for Android. The
 
 # Tech used:
 - Butterknife (Presentation/View)
-- RxJava (Domain/Interactor)
-- Retrofit (Network)
+- RxJava 2 (Domain/Interactor)
+- Retrofit 2 (Network)
 - Room (Caching)
-- Dagger (Dependency)
+- Dagger 2 (Dependency)
+- Mockito (Test)
 
 # Feedback
 Feedback are appreciated! Thank you! :)
 
 # TODO List:
-- Add unit test
+- Add more Unit Tests
