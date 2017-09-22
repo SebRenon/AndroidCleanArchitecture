@@ -17,12 +17,11 @@
 
 package com.sebrenon.androidcleanarchitecture.quote.network.datasource.impl;
 
-import com.sebrenon.androidcleanarchitecture.application.ApplicationController;
 import com.sebrenon.androidcleanarchitecture.quote.data.datasource.QuoteDataSource;
 import com.sebrenon.androidcleanarchitecture.quote.domain.model.QuoteModel;
-import com.sebrenon.androidcleanarchitecture.quote.network.transform.TransformQuoteData;
-import com.sebrenon.androidcleanarchitecture.quote.network.endpoint.QuoteEndpoint;
+import com.sebrenon.androidcleanarchitecture.quote.network.endpoint.QuoteServices;
 import com.sebrenon.androidcleanarchitecture.quote.network.model.RemoteQuoteModel;
+import com.sebrenon.androidcleanarchitecture.quote.network.transform.TransformQuoteData;
 
 import java.io.IOException;
 
@@ -30,7 +29,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by Seb on 14/09/2017.
@@ -38,20 +36,19 @@ import retrofit2.Retrofit;
 
 public class WebDataSourceImpl implements QuoteDataSource {
 
-    private final Retrofit mRetrofit;
+    private final QuoteServices mQuoteServices;
 
-    public WebDataSourceImpl(ApplicationController applicationController) {
-        this.mRetrofit = applicationController.getRetrofit();
+    public WebDataSourceImpl(@Nonnull QuoteServices quoteServices) {
+        this.mQuoteServices = quoteServices;
     }
 
     @Nullable
     @Override
     public QuoteModel fetchQuote(@Nonnull String symbol) {
-        QuoteEndpoint service = mRetrofit.create(QuoteEndpoint.class);
         String query = "select * from yahoo.finance.quote where symbol =\"" + symbol + "\"";
         Response<RemoteQuoteModel> remoteQuoteModel;
         try {
-            remoteQuoteModel = service.fetchQuote(query).execute();
+            remoteQuoteModel = mQuoteServices.fetchQuote(query).execute();
         } catch (IOException e) {
             return null;
         }

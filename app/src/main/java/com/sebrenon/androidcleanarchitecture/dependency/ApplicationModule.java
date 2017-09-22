@@ -27,6 +27,7 @@ import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.RequestQuot
 import com.sebrenon.androidcleanarchitecture.quote.domain.interactor.impl.RequestQuoteUseCaseImpl;
 import com.sebrenon.androidcleanarchitecture.quote.domain.repository.QuoteDataRepository;
 import com.sebrenon.androidcleanarchitecture.quote.network.datasource.impl.WebDataSourceImpl;
+import com.sebrenon.androidcleanarchitecture.quote.network.endpoint.QuoteServices;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -51,8 +52,14 @@ public class ApplicationModule {
 
     @Singleton
     @Provides
-    QuoteDataSource webDataSource(ApplicationController applicationController) {
-        return new WebDataSourceImpl(applicationController);
+    QuoteServices quoteServices(ApplicationController applicationController) {
+        return applicationController.getRetrofit().create(QuoteServices.class);
+    }
+
+    @Singleton
+    @Provides
+    QuoteDataSource webDataSource(QuoteServices quoteServices) {
+        return new WebDataSourceImpl(quoteServices);
     }
 
     @Singleton

@@ -38,16 +38,13 @@ public class ApplicationControllerImpl implements ApplicationController {
 
     private final AppDatabase mAppDataBase;
 
-    private ApplicationControllerImpl(@Nonnull AppDatabase database, @Nonnull Retrofit.Builder builder) {
-        mRetrofit =
-                builder.baseUrl("https://query.yahooapis.com/")
-                        .addConverterFactory(GsonConverterFactory.create()).build();
-
+    private ApplicationControllerImpl(@Nonnull AppDatabase database, @Nonnull Retrofit retrofit) {
+        mRetrofit = retrofit;
         mAppDataBase = database;
     }
 
-    public static void init(@Nonnull AppDatabase database, @Nonnull Retrofit.Builder builder) {
-        sInstance = new ApplicationControllerImpl(database, builder);
+    public static void init(@Nonnull AppDatabase database, @Nonnull Retrofit retrofit) {
+        sInstance = new ApplicationControllerImpl(database, retrofit);
     }
 
     public static ApplicationController getInstance() {

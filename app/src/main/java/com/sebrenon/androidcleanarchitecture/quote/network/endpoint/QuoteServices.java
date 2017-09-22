@@ -27,7 +27,7 @@ import retrofit2.http.Query;
  * Created by Seb on 14/09/2017.
  */
 
-public interface QuoteEndpoint {
+public interface QuoteServices {
 
     @GET("v1/public/yql?format=json&env=store://datatables.org/alltableswithkeys")
     Call<RemoteQuoteModel> fetchQuote(@Query("q") String query);

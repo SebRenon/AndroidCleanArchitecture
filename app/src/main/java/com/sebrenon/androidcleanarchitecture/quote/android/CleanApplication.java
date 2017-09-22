@@ -25,6 +25,7 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Seb on 14/09/2017.
@@ -37,7 +38,9 @@ public class CleanApplication extends Application {
         super.onCreate();
         AppDatabase database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "db-clean-arch").build();
-        ApplicationControllerImpl.init(database, new Retrofit.Builder());
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://query.yahooapis.com/")
+                .addConverterFactory(GsonConverterFactory.create()).build();
+        ApplicationControllerImpl.init(database, retrofit);
         AppRegistry.init();
     }
 }
